@@ -48,6 +48,7 @@ public class ClientImplementation implements Client
         String message=scanner.nextLine();
         writer.println(message);
         writer.flush();
+        System.out.println(reader.readLine());
       }
     }
   }
