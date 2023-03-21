@@ -10,9 +10,9 @@ public class StartClient
   public static void main(String[] args) throws IOException
   {
     ClientImplementation client=new ClientImplementation("localhost", 8080,"230.0.0.0",8888);
-    ClientImplementation client1 = new ClientImplementation("localhost", 8080,"230.0.0.0",8888);
+
+    Application.launch(MyApplication.class);
     client.communicate();
-    client1.communicate();
   }
 
 }

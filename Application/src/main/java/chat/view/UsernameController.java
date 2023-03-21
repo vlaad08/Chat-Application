@@ -1,10 +1,13 @@
 package chat.view;
 
 import chat.viewmodel.UsernameViewModel;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 
 public class UsernameController
@@ -26,6 +29,13 @@ public class UsernameController
     this.root = root;
 
     //binds??
+
+    usernameField.setOnKeyPressed(event -> {
+      if(event.getCode() == KeyCode.ENTER)
+      {
+        onCreateUser();
+      }
+    });
 
     unmodel.bindUsername(usernameField.textProperty());
   }
