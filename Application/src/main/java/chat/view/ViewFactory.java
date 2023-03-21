@@ -1,8 +1,6 @@
-package application.application.view;
+package chat.view;
 
-import application.application.viewmodel.ChatViewModel;
-import application.application.viewmodel.UsernameViewModel;
-import application.application.viewmodel.ViewModelFactory;
+import chat.viewmodel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
@@ -35,7 +33,7 @@ public class ViewFactory
 
     if (unmodel == null) {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("application/application/username.fxml"));
+      loader.setLocation(getClass().getResource("/chat/username.fxml"));
       try {
         Region root = loader.load();
         unmodel = loader.getController();
@@ -53,7 +51,7 @@ public class ViewFactory
 
     if (cvmodel == null) {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("application/application/chat.fxml"));
+      loader.setLocation(getClass().getResource("/chat/chat.fxml"));
       try {
         Region root = loader.load();
         cvmodel = loader.getController();

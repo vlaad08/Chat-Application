@@ -1,4 +1,4 @@
-package application.application.model.server;
+package chat.model.server;
 
 import java.io.IOException;
 import java.net.Socket;

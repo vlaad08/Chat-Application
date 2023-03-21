@@ -1,6 +1,6 @@
-package application.application.view;
+package chat.view;
 
-import application.application.viewmodel.ChatViewModel;
+import chat.viewmodel.ChatViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;

@@ -1,6 +1,6 @@
-package application.application.view;
+package chat.view;
 
-import application.application.viewmodel.ViewModelFactory;
+import chat.viewmodel.ViewModelFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
