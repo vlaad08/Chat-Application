@@ -2,6 +2,7 @@ package chat.view;
 
 import chat.viewmodel.UsernameViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -25,6 +26,8 @@ public class UsernameController
     this.root = root;
 
     //binds??
+
+    unmodel.bindUsername(usernameField.textProperty());
   }
 
   public void reset(){}
@@ -35,10 +38,21 @@ public class UsernameController
 
   @FXML public void onCreateUser(){
     //create user
-    vhandler.openView("chatView");
+    if(usernameField.getText() == null || usernameField.getText().equals(""))
+    {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please insert a username or continue as a guest");
+      alert.show();
+    }
+    else
+    {
+      unmodel.setUsername(usernameField.getText());
+      vhandler.openView("chatView");
+    }
   }
 
   @FXML public void onShowChat(){
+    unmodel.setUsername("Guest");
     vhandler.openView("chatView");
   }
 
