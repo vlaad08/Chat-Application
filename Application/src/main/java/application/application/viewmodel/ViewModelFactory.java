@@ -1,10 +1,28 @@
 package application.application.viewmodel;
 
+import application.application.model.Model;
+
 public class ViewModelFactory
 {
 
-  private UsernameViewModel unmodel;
-  private
+  private UsernameViewModel usernameViewModel;
+  private ChatViewModel chatViewModel;
 
 
+  public ViewModelFactory(Model model)
+  {
+    this.usernameViewModel = new UsernameViewModel(model);
+    this.chatViewModel = new ChatViewModel(model);
+
+  }
+
+  public ChatViewModel getChatViewModel()
+  {
+    return chatViewModel;
+  }
+
+  public UsernameViewModel getUsernameViewModel()
+  {
+    return usernameViewModel;
+  }
 }
