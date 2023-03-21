@@ -8,7 +8,6 @@ public class ChatViewModel
 {
   private Model model;
 
-  private ObjectProperty<P>
 
   public ChatViewModel(Model model)
   {
