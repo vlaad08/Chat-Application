@@ -7,21 +7,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.application.view.ChatController">
    <children>
-      <TextArea editable="false" prefHeight="345.0" prefWidth="580.0" />
+      <TextArea fx:id="chatTextArea" editable="false" prefHeight="345.0" prefWidth="580.0" />
       <HBox prefHeight="153.0" prefWidth="580.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <TextField prefHeight="58.0" prefWidth="469.0">
+            <TextField fx:id="inputTextField" prefHeight="58.0" prefWidth="469.0">
                <HBox.margin>
                   <Insets top="40.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="110.0" text="Send">
+            <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="59.0" prefWidth="110.0" text="Send">
                <HBox.margin>
                   <Insets left="5.0" top="40.0" />
                </HBox.margin>
