@@ -1,5 +1,8 @@
 package chat.client;
 
+import chat.MyApplication;
+import javafx.application.Application;
+
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.Socket;
@@ -12,12 +15,12 @@ public class ClientImplementation implements Client
   private final PropertyChangeSupport support;
   private final BufferedReader reader;
   private final MessageListener listener;
-  private String name;
-  private Scanner scanner=new Scanner(System.in);
 
-  public ClientImplementation(String host, int port,String name, String groupAddress, int groupPort) throws IOException
+  private final Scanner scanner=new Scanner(System.in);
+
+  public ClientImplementation(String host, int port, String groupAddress, int groupPort) throws IOException
   {
-    this.name=name;
+
     socket = new Socket(host, port);
     InputStream inputStream = socket.getInputStream();
     OutputStream outputStream = socket.getOutputStream();
@@ -31,13 +34,10 @@ public class ClientImplementation implements Client
     thread.start();
   }
 
-  public String getName()
-  {
-    return name;
-  }
 
   @Override public void communicate() throws IOException
   {
+    Application.launch(MyApplication.class);
     writer.println("connect");
     System.out.println("connect");
     writer.flush();
