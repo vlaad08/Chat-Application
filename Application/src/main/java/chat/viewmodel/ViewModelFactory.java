@@ -1,6 +1,6 @@
-package application.application.viewmodel;
+package chat.viewmodel;
 
-import application.application.model.Model;
+import chat.model.Model;
 
 public class ViewModelFactory
 {

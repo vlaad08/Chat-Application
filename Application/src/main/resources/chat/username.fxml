@@ -1,4 +1,4 @@
-  <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.application.view.UsernameController ">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.view.UsernameController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -36,7 +35,7 @@
             </HBox>
             <HBox prefHeight="191.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" text="Create User" textAlignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#onCreateUser" prefHeight="60.0" prefWidth="120.0" text="Create User" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -44,7 +43,7 @@
                         <Insets left="90.0" top="50.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" text="View Chat as Guest" textAlignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#onShowChat" prefHeight="60.0" prefWidth="120.0" text="View Chat as Guest" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="160.0" top="50.0" />
                      </HBox.margin>

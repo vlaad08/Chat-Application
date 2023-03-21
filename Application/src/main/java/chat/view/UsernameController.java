@@ -1,6 +1,6 @@
-package application.application.view;
+package chat.view;
 
-import application.application.viewmodel.UsernameViewModel;
+import chat.viewmodel.UsernameViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -35,11 +35,11 @@ public class UsernameController
 
   @FXML public void onCreateUser(){
     //create user
-    vhandler.openView("usernameView");
+    vhandler.openView("chatView");
   }
 
   @FXML public void onShowChat(){
-    vhandler.openView("usernameView");
+    vhandler.openView("chatView");
   }
 
 

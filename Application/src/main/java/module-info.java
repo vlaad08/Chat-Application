@@ -1,8 +1,10 @@
-module application.application {
+module chat {
   requires javafx.controls;
   requires javafx.fxml;
   requires com.google.gson;
 
-  opens application.application to javafx.fxml;
-  exports application.application;
+  opens chat to javafx.fxml;
+  opens chat.view to javafx.fxml;
+
+  exports chat;
 }
