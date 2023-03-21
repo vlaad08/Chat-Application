@@ -1,5 +1,6 @@
 package application.application.model.server;
 
+import java.io.IOException;
 import java.net.Socket;
 
 
@@ -15,8 +16,16 @@ public class LoginCommunicator implements Runnable
     //this.gson = new Gson();
   }
 
+  private void communicate() throws IOException{
+
+  }
+
   @Override public void run()
   {
-
+    try{
+      communicate();
+    }catch (IOException e){
+      e.printStackTrace();
+    }
   }
 }
