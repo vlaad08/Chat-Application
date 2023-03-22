@@ -12,6 +12,9 @@ public class StartClient
     ClientImplementation client=new ClientImplementation("localhost", 4567,"230.0.0.0",8888);
 
     client.communicate();
+
+
+    Application.launch(MyApplication.class);
   }
 
 }

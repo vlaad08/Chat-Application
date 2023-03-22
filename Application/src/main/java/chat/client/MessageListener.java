@@ -2,11 +2,12 @@ package chat.client;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.net.*;
 import java.nio.channels.AsynchronousCloseException;
 
-public class MessageListener implements Runnable, PropertyChangeListener
+public class MessageListener implements Runnable
 {
   private final ClientImplementation client;
   private final MulticastSocket multicastSocket;
@@ -51,19 +52,5 @@ public class MessageListener implements Runnable, PropertyChangeListener
     multicastSocket.close();
   }
 
-  @Override public void propertyChange(PropertyChangeEvent evt)
-  {
-    if(evt.getPropertyName().equals("messageSent"))
-    {
-      String message = (String) evt.getNewValue();
-      try
-      {
-        client.receiveBroadcast(message);
-      }
-      catch (IOException e)
-      {
-        throw new RuntimeException(e);
-      }
-    }
-  }
+
 }

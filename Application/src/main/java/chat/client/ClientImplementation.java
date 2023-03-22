@@ -3,6 +3,7 @@ package chat.client;
 import chat.MyApplication;
 import javafx.application.Application;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.Socket;
@@ -28,6 +29,7 @@ public class ClientImplementation implements Client
     reader = new BufferedReader(inputStreamReader);
     writer = new PrintWriter(outputStream);
     support=new PropertyChangeSupport(this);
+    support.addPropertyChangeListener(this);
 
     listener=new MessageListener(this,groupAddress,groupPort);
     Thread thread=new Thread(listener);
@@ -35,7 +37,7 @@ public class ClientImplementation implements Client
   }
 
 
-  @Override public void communicate() throws IOException
+  @Override public synchronized void communicate() throws IOException
   {
     writer.println("connect");
     System.out.println("connect");
@@ -44,7 +46,6 @@ public class ClientImplementation implements Client
     {
       while (true)
       {
-        Application.launch(MyApplication.class);
 //        System.out.println(reader.readLine());
         String message=scanner.nextLine();
         writer.println(message);
@@ -57,5 +58,14 @@ public class ClientImplementation implements Client
   public void receiveBroadcast(String message) throws IOException
   {
     System.out.println(message);
+  }
+
+  @Override public synchronized void propertyChange(PropertyChangeEvent evt)
+  {
+    if(evt.getPropertyName().equals("messageSent"))
+    {
+      String message = (String) evt.getNewValue();
+      System.out.println(message);
+    }
   }
 }
