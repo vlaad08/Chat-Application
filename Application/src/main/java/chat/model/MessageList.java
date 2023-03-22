@@ -13,7 +13,7 @@ public class MessageList
 
   public void addMessage(String msg)
   {
-    messages.add(msg);
+    messages.add(Message.getInstance(msg).getMessage());
   }
 
   public ArrayList<String> getMessages()

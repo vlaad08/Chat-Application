@@ -55,7 +55,6 @@ public class ClientImplementation implements Client
 
   public void receiveBroadcast(String message) throws IOException
   {
-    String answer=reader.readLine();
-    support.firePropertyChange("result", null,answer);
+    System.out.println(message);
   }
 }

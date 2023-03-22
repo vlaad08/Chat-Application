@@ -29,9 +29,10 @@ public class ModelManager implements Model
   @Override public void sendMessage(String message, String username)
   {
     message = username + ":\n" + message;
-    messageList.addMessage(message);
-    support.firePropertyChange("messageSent", false, true);
+    support.firePropertyChange("messageSent", false, message);
   }
+
+
 
   @Override public ArrayList<String> getMessages()
   {
@@ -45,5 +46,10 @@ public class ModelManager implements Model
   public void removePropertyChangeListener(PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(listener);
+  }
+
+  @Override public void receivedMessageFromServer(String message)
+  {
+    messageList.addMessage(message);
   }
 }

@@ -14,4 +14,6 @@ public interface Model
 
   void addPropertyChangeListener(PropertyChangeListener listener);
   void removePropertyChangeListener(PropertyChangeListener listener);
+
+  void receivedMessageFromServer(String message);
 }

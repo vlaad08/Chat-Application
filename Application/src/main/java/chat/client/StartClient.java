@@ -9,7 +9,7 @@ public class StartClient
 {
   public static void main(String[] args) throws IOException
   {
-    ClientImplementation client=new ClientImplementation("10.154.212.128", 8080,"230.0.0.0",8888);
+    ClientImplementation client=new ClientImplementation("localhost", 4567,"230.0.0.0",8888);
 
     client.communicate();
   }
