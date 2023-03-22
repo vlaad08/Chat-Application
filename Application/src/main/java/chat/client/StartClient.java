@@ -10,9 +10,9 @@ public class StartClient
   public static void main(String[] args) throws IOException
   {
     ClientImplementation client=new ClientImplementation("localhost", 8080,"230.0.0.0",8888);
-    Thread thread = new Thread(client);
 
-    thread.start();
+    Application.launch(MyApplication.class);
+    client.communicate();
   }
 
 }

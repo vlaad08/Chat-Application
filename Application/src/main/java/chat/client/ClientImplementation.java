@@ -2,7 +2,6 @@ package chat.client;
 
 import chat.MyApplication;
 import javafx.application.Application;
-import javafx.application.Platform;
 
 import java.beans.PropertyChangeSupport;
 import java.io.*;
@@ -57,17 +56,5 @@ public class ClientImplementation implements Client
   {
     String answer=reader.readLine();
     support.firePropertyChange("result", null,answer);
-  }
-
-  @Override public void run()
-  {
-    try
-    {
-      communicate();
-    }
-    catch (IOException e)
-    {
-      throw new RuntimeException(e);
-    }
   }
 }
