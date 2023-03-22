@@ -41,7 +41,8 @@ public class LoginCommunicator implements Runnable
             writer.flush();
             if (message.equals("exit"))
             {
-              break;
+              socket.close();
+
             }
           }
         }
