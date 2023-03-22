@@ -44,10 +44,11 @@ public class ClientImplementation implements Client
     {
       while (true)
       {
+//        System.out.println(reader.readLine());
         String message=scanner.nextLine();
         writer.println(message);
         writer.flush();
-        System.out.println(reader.readLine());
+
       }
     }
   }
