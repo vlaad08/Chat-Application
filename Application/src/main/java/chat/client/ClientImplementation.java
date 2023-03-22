@@ -44,6 +44,7 @@ public class ClientImplementation implements Client
     {
       while (true)
       {
+        Application.launch(MyApplication.class);
 //        System.out.println(reader.readLine());
         String message=scanner.nextLine();
         writer.println(message);
