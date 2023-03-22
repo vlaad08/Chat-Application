@@ -29,6 +29,7 @@ public class LoginCommunicator implements Runnable
       while (true)
       {
         String message=reader.readLine();
+        System.out.println(message);
         if (message.equals("connect"))
         {
           writer.println("connected");
@@ -40,6 +41,7 @@ public class LoginCommunicator implements Runnable
           while (true)
           {
             message=reader.readLine();
+            System.out.println(message);
             writer.println(message);
             writer.flush();
             if (message.equals("exit"))
