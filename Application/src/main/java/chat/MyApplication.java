@@ -17,4 +17,5 @@ public class MyApplication extends Application
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
     viewHandler.start(primaryStage);
   }
+
 }
