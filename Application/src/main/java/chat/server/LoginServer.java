@@ -9,7 +9,7 @@ public class LoginServer
   public static void main(String[] args) throws IOException
   {
     ServerSocket serverSocket = new ServerSocket(8080);
-    UDPBroadcaster broadcaster = new UDPBroadcaster("230.0.0.0", 8888);
+    UDPBroadcaster broadcaster = new UDPBroadcaster("10.154.212.128", 8888);
     while(true) {
       System.out.println("Server is ready for input port 8080");
       Socket socket = serverSocket.accept();

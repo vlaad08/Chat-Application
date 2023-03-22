@@ -31,8 +31,8 @@ public class LoginCommunicator implements Runnable
         String message=reader.readLine();
         if (message.equals("connect"))
         {
+          System.out.println(socket.getInetAddress().getHostAddress() + " connected");
           writer.println("connected");
-          System.out.println("connected");
           writer.flush();
 
 
@@ -41,6 +41,7 @@ public class LoginCommunicator implements Runnable
           {
             message=reader.readLine();
             writer.println(message);
+            System.out.println(message);
             writer.flush();
             if (message.equals("exit"))
             {

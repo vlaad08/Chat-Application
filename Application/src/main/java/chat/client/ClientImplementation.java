@@ -39,7 +39,6 @@ public class ClientImplementation implements Client
   @Override public void communicate() throws IOException
   {
     writer.println("connect");
-    System.out.println("connect");
     writer.flush();
     if (reader.readLine().equals("connected"))
     {
