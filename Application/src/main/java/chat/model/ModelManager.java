@@ -1,19 +1,29 @@
 package chat.model;
 
+import chat.client.Client;
+import chat.client.ClientImplementation;
+
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class ModelManager implements Model
+public class ModelManager implements Model,PropertyChangeListener
 {
   private User user;
   private MessageList messageList;
   private PropertyChangeSupport support;
 
-  public ModelManager()
+  private Client clientImplementation;
+
+  public ModelManager() throws IOException
   {
     messageList = new MessageList();
     support = new PropertyChangeSupport(this);
+    clientImplementation=new ClientImplementation("localhost", 4567,"230.0.0.0",8888);
+
+    clientImplementation.addPropertyChangeListener(this);
   }
 
   @Override public void setUsername(String username)
@@ -29,6 +39,7 @@ public class ModelManager implements Model
   @Override public void sendMessage(String message, String username)
   {
     message = username + ":\n" + message;
+    messageList.addMessage(message);
     support.firePropertyChange("messageSent", false, message);
   }
 
@@ -51,5 +62,13 @@ public class ModelManager implements Model
   @Override public void receivedMessageFromServer(String message)
   {
     messageList.addMessage(message);
+  }
+
+  @Override public void propertyChange(PropertyChangeEvent evt)
+  {
+    if (evt.getPropertyName().equals("newMessage"))
+    {
+      support.firePropertyChange("newViewModelMessage",null,evt.getNewValue());
+    }
   }
 }

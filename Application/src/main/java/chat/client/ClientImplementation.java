@@ -4,6 +4,7 @@ import chat.MyApplication;
 import javafx.application.Application;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.Socket;
@@ -55,8 +56,25 @@ public class ClientImplementation implements Client
     }
   }
 
+  public void addPropertyChangeListener(PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+
+  }
+
+  @Override public void sendMessage(String json)
+  {
+
+  }
+
   public void receiveBroadcast(String message) throws IOException
   {
+    support.firePropertyChange("newMessage",null,message);
     System.out.println(message);
   }
 

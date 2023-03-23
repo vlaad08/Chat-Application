@@ -37,6 +37,8 @@ public class LoginCommunicator implements Runnable
           {
             message=reader.readLine();
             System.out.println(message);
+            broadcaster.broadcast(message);
+            System.out.println(message);
             writer.println(message);
             writer.flush();
             if (message.equals("exit"))
