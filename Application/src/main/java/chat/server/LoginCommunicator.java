@@ -25,7 +25,7 @@ public class LoginCommunicator implements Runnable
     try{
       while (true)
       {
-        String message=reader.readLine();
+        String message = reader.readLine();
         System.out.println(message);
         if (message.equals("connect"))
         {

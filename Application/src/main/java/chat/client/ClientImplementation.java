@@ -47,10 +47,11 @@ public class ClientImplementation implements Client
       while (true)
       {
 //        System.out.println(reader.readLine());
+        System.out.print("Message: ");
         String message=scanner.nextLine();
         writer.println(message);
         writer.flush();
-
+        System.out.println("Server "+reader.readLine());
       }
     }
   }
