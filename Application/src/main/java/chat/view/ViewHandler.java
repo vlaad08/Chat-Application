@@ -26,7 +26,7 @@ public class ViewHandler
     Region vfactoryRegion = vfactory.loadView(id);
     currentScene.setRoot(vfactoryRegion);
     primaryStage.setScene(currentScene);
-    primaryStage.setTitle("usernameView");
+    primaryStage.setTitle("ChatApp");
     primaryStage.show();
   }
 

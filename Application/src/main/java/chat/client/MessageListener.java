@@ -1,5 +1,8 @@
 package chat.client;
 
+import chat.model.Message;
+import com.google.gson.Gson;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -14,6 +17,7 @@ public class MessageListener implements Runnable
   private final InetSocketAddress socketAddress;
   private final NetworkInterface netInterface;
 
+
   public MessageListener(ClientImplementation client, String groupAddress, int port) throws
       IOException
   {
@@ -24,7 +28,7 @@ public class MessageListener implements Runnable
     netInterface = NetworkInterface.getByInetAddress(group);
   }
 
-  public void run() {
+  public synchronized void run() {
     try {
       listen();
     } catch (IOException e) {

@@ -8,10 +8,10 @@ public class LoginServer
 {
   public static void main(String[] args) throws IOException
   {
-    ServerSocket serverSocket = new ServerSocket(4567);
+    ServerSocket serverSocket = new ServerSocket(8080);
     UDPBroadcaster broadcaster = new UDPBroadcaster("230.0.0.0", 8888);
     while(true) {
-      System.out.println("Server is ready for input port 8080");
+      System.out.println("Server is ready for input port 4567");
       Socket socket = serverSocket.accept();
       LoginCommunicator communicator = new LoginCommunicator(socket, broadcaster);
       Thread communicatorThread = new Thread(communicator);

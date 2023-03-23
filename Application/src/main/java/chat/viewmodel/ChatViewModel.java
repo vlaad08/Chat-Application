@@ -42,9 +42,12 @@ public class ChatViewModel implements PropertyChangeListener
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    ArrayList<String> list = model.getMessages();
-    ObservableList<String> observableList= FXCollections.observableList(list);
+    if(evt.getPropertyName().equals("reloadMessages"))
+    {
+      ArrayList<String> list = model.getMessages();
+      ObservableList<String> observableList= FXCollections.observableList(list);
 
-    chat.set(observableList);
+      chat.set(observableList);
+    }
   }
 }

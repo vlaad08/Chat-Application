@@ -1,9 +1,13 @@
 package chat.client;
 
 import chat.MyApplication;
+import chat.model.Message;
+import com.google.gson.Gson;
 import javafx.application.Application;
+import javafx.application.Platform;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.Socket;
@@ -16,8 +20,8 @@ public class ClientImplementation implements Client
   private final PropertyChangeSupport support;
   private final BufferedReader reader;
   private final MessageListener listener;
+  private final Gson gson;
 
-  private final Scanner scanner=new Scanner(System.in);
 
   public ClientImplementation(String host, int port, String groupAddress, int groupPort) throws IOException
   {
@@ -29,43 +33,57 @@ public class ClientImplementation implements Client
     reader = new BufferedReader(inputStreamReader);
     writer = new PrintWriter(outputStream);
     support=new PropertyChangeSupport(this);
-    support.addPropertyChangeListener(this);
 
+    gson = new Gson();
     listener=new MessageListener(this,groupAddress,groupPort);
     Thread thread=new Thread(listener);
     thread.start();
   }
 
 
-  @Override public synchronized void communicate() throws IOException
+  @Override public synchronized void communicate()
+      throws IOException, InterruptedException
   {
     writer.println("connect");
     System.out.println("connect");
     writer.flush();
     if (reader.readLine().equals("connected"))
     {
-      while (true)
-      {
-//        System.out.println(reader.readLine());
-        String message=scanner.nextLine();
-        writer.println(message);
-        writer.flush();
-
-      }
+      System.out.println("connected");
     }
+
+  }
+
+  @Override public void addPropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removePropertyChangeListener(
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(listener);
+  }
+
+  @Override public void sendMessage(String json)
+  {
+    System.out.println(json);
+    writer.println(json);
+    writer.flush();
   }
 
   public void receiveBroadcast(String message) throws IOException
   {
-    System.out.println(message);
+    Platform.runLater(() -> {
+      Message msg = gson.fromJson(message, Message.class);
+      support.firePropertyChange("messageSentClient", false,msg.getMessage());
+    });
   }
 
-  @Override public synchronized void propertyChange(PropertyChangeEvent evt)
+  @Override public void close() throws IOException
   {
-    if(evt.getPropertyName().equals("messageSent"))
-    {
-      String message = (String) evt.getNewValue();
-      System.out.println(message);
-    }
+    listener.close();
+    socket.close();
   }
 }

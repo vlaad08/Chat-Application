@@ -1,19 +1,24 @@
 package chat.server;
 
+import chat.model.Message;
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.net.Socket;
-
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class LoginCommunicator implements Runnable
 {
   private final UDPBroadcaster broadcaster;
   private final Socket socket;
-  //private final Gson gson;
+  private final Gson gson;
 
   public LoginCommunicator(Socket socket, UDPBroadcaster broadcaster){
     this.socket = socket;
     this.broadcaster = broadcaster;
-    //this.gson = new Gson();
+    this.gson = new Gson();
   }
 
   private void communicate() throws IOException
@@ -23,27 +28,17 @@ public class LoginCommunicator implements Runnable
     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
     PrintWriter writer = new PrintWriter(outputStream);
     try{
-      while (true)
+      loop : while (true)
       {
-        String message=reader.readLine();
-        System.out.println(message);
-        if (message.equals("connect"))
+        String text = reader.readLine();
+        if(text.equals("closeApplication"))
         {
-          writer.println("connected");
-          System.out.println("connected");
-          writer.flush();
-
-          while (true)
-          {
-            message=reader.readLine();
-            System.out.println(message);
-            writer.println(message);
-            writer.flush();
-            if (message.equals("exit"))
-            {
-              break;
-            }
-          }
+          break loop;
+        }
+        else
+        {
+          System.out.println(text);
+          broadcaster.broadcast(text);
         }
       }
     }
@@ -59,7 +54,7 @@ public class LoginCommunicator implements Runnable
   @Override public void run()
   {
     try{
-      communicate();
+        communicate();
     }catch (IOException e){
       e.printStackTrace();
     }
