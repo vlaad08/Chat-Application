@@ -14,7 +14,6 @@ public class LoginCommunicator implements Runnable
   private final UDPBroadcaster broadcaster;
   private final Socket socket;
   private final Gson gson;
-
   private final FileOutputStream fileOut = new FileOutputStream("chatLog.txt", true);
 
   public LoginCommunicator(Socket socket, UDPBroadcaster broadcaster)
@@ -38,7 +37,11 @@ public class LoginCommunicator implements Runnable
       loop : while (true)
       {
         String text = reader.readLine();
-        if(text.equals("closeApplication"))
+        if(text == null)
+        {
+          break loop;
+        }
+        else if(text.equals("closeApplication"))
         {
           break loop;
         }

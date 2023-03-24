@@ -68,7 +68,6 @@ public class ClientImplementation implements Client
 
   @Override public void sendMessage(String json)
   {
-    System.out.println(json);
     writer.println(json);
     writer.flush();
   }
