@@ -15,7 +15,11 @@ public class LoginCommunicator implements Runnable
   private final Socket socket;
   private final Gson gson;
 
-  public LoginCommunicator(Socket socket, UDPBroadcaster broadcaster){
+  private final FileOutputStream fileOut = new FileOutputStream("chatLog.txt", true);
+
+  public LoginCommunicator(Socket socket, UDPBroadcaster broadcaster)
+      throws FileNotFoundException
+  {
     this.socket = socket;
     this.broadcaster = broadcaster;
     this.gson = new Gson();
@@ -23,10 +27,13 @@ public class LoginCommunicator implements Runnable
 
   private void communicate() throws IOException
   {
+    SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+    Date date = new Date();
     InputStream inputStream = socket.getInputStream();
     OutputStream outputStream = socket.getOutputStream();
     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
     PrintWriter writer = new PrintWriter(outputStream);
+    PrintWriter fileWriter = new PrintWriter(fileOut);
     try{
       loop : while (true)
       {
@@ -37,16 +44,21 @@ public class LoginCommunicator implements Runnable
         }
         else
         {
-          System.out.println(text);
+          Message msg = gson.fromJson(text, Message.class);
+          String log = format.format(date) +  " " + msg.getMessage() + "\n";
+          fileWriter.println(log);
+          fileWriter.close();
           broadcaster.broadcast(text);
         }
       }
     }
+
     finally
     {
       synchronized (broadcaster)
       {
         socket.close();
+
       }
     }
   }

@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-
+import javafx.stage.Window;
 
 public class ChatController
 {
@@ -52,8 +52,9 @@ public class ChatController
   @FXML public void onSend()
   {
     viewModel.sendMessage(inputTextField.getText(), viewModel.getUsername());
-    inputTextField.setText("");
+    reset();
   }
+
 
 
 

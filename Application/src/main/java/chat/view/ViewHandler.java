@@ -1,9 +1,12 @@
 package chat.view;
 
 import chat.viewmodel.ViewModelFactory;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class ViewHandler
 {
@@ -14,7 +17,6 @@ public class ViewHandler
   public ViewHandler(ViewModelFactory viewModelFactory){
     vfactory = new ViewFactory(this,viewModelFactory);
     currentScene = new Scene(new Region());
-
   }
 
   public void start(Stage primaryStage){
