@@ -2,6 +2,7 @@ package chat.view;
 
 import chat.viewmodel.ViewModelFactory;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -24,6 +25,7 @@ public class ViewHandler
   public void openView(String id){
     Region vfactoryRegion = vfactory.loadView(id);
     currentScene.setRoot(vfactoryRegion);
+    primaryStage.getIcons().add(new Image("bookAndQuill.png"));
     primaryStage.setScene(currentScene);
     primaryStage.setResizable(false);
     primaryStage.setTitle("ChatApp");
