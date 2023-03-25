@@ -1,12 +1,9 @@
 package chat.view;
 
 import chat.viewmodel.ViewModelFactory;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 public class ViewHandler
 {
@@ -28,6 +25,7 @@ public class ViewHandler
     Region vfactoryRegion = vfactory.loadView(id);
     currentScene.setRoot(vfactoryRegion);
     primaryStage.setScene(currentScene);
+    primaryStage.setResizable(false);
     primaryStage.setTitle("ChatApp");
     primaryStage.show();
   }

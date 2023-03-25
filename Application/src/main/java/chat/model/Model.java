@@ -16,4 +16,6 @@ public interface Model
   void removePropertyChangeListener(PropertyChangeListener listener);
 
   void receivedMessageFromServer(String message);
+
+  void closeLogFile();
 }

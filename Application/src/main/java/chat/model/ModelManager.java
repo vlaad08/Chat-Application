@@ -7,8 +7,12 @@ import com.google.gson.Gson;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ModelManager implements Model
 {
@@ -18,12 +22,17 @@ public class ModelManager implements Model
   private Gson gson;
   private Client client;
 
+  private FileOutputStream fileOut = new FileOutputStream("chatLog.txt");
+
+  private PrintWriter fileWriter = new PrintWriter(fileOut);
+
   public ModelManager(Client client) throws IOException
   {
     this.client = client;
     messageList = new MessageList();
     support = new PropertyChangeSupport(this);
     gson = new Gson();
+
     client.addPropertyChangeListener(new PropertyChangeListener()
     {
       @Override public void propertyChange(PropertyChangeEvent evt)
@@ -73,6 +82,17 @@ public class ModelManager implements Model
 
   @Override public void receivedMessageFromServer(String message)
   {
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
     messageList.addMessage(message);
+
+    String log = format.format(date) +  " " + message + "\n";
+    fileWriter.write(log);
   }
+
+  @Override public void closeLogFile()
+  {
+    fileWriter.close();
+  }
+
 }

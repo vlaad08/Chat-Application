@@ -35,6 +35,7 @@ public class MyApplication extends Application
         {
           throw new RuntimeException(e);
         }
+        model.closeLogFile();
         viewHandler.closeView();
       }
     });
