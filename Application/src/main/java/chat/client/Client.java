@@ -12,5 +12,7 @@ public interface Client extends Closeable
 
   void removePropertyChangeListener(PropertyChangeListener listener);
 
+  int requestNumberOfConnectedUsers() throws IOException;
+
   void sendMessage(String json);
 }

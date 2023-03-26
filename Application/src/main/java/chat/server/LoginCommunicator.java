@@ -13,14 +13,15 @@ public class LoginCommunicator implements Runnable
 {
   private final UDPBroadcaster broadcaster;
   private final Socket socket;
-  private final Gson gson;
+  private Gson gson;
+
+  private  int connectedClients = 0;
 
   public LoginCommunicator(Socket socket, UDPBroadcaster broadcaster)
       throws FileNotFoundException
   {
     this.socket = socket;
     this.broadcaster = broadcaster;
-    this.gson = new Gson();
   }
 
   private void communicate() throws IOException
@@ -37,15 +38,21 @@ public class LoginCommunicator implements Runnable
         if(text == null)
         {
           break loop;
+
         }
-        else if(text.equals("closeApplication"))
+        else if(text.equals("connect"))
         {
-          break loop;
+          connectedClients++;
+          writer.println("connected");
+          writer.flush();
+        }
+        else if(text.equals("returnNumberOfConnectedClients"))
+        {
+          writer.println(connectedClients);
+          writer.flush();
         }
         else
         {
-          Message msg = gson.fromJson(text, Message.class);
-
           broadcaster.broadcast(text);
         }
       }

@@ -90,6 +90,11 @@ public class ModelManager implements Model
     fileWriter.write(log);
   }
 
+  @Override public int getConnectedUsers() throws IOException
+  {
+    return client.requestNumberOfConnectedUsers();
+  }
+
   @Override public void closeLogFile()
   {
     fileWriter.close();

@@ -66,6 +66,14 @@ public class ClientImplementation implements Client
     support.removePropertyChangeListener(listener);
   }
 
+  @Override public int requestNumberOfConnectedUsers() throws IOException
+  {
+    writer.println("returnNumberOfConnectedClients");
+    writer.flush();
+    String numberString = reader.readLine();
+    return Integer.parseInt(numberString);
+  }
+
   @Override public void sendMessage(String json)
   {
     writer.println(json);

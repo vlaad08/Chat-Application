@@ -8,13 +8,14 @@ import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChatViewModel implements PropertyChangeListener
 {
-  private Model model;
+  private final Model model;
 
-  private ObjectProperty<ObservableList<String>> chat;
+  private final ObjectProperty<ObservableList<String>> chat;
 
   public ChatViewModel(Model model)
   {
@@ -49,5 +50,10 @@ public class ChatViewModel implements PropertyChangeListener
 
       chat.set(observableList);
     }
+  }
+
+  public int getUsersConnected() throws IOException
+  {
+    return model.getConnectedUsers();
   }
 }

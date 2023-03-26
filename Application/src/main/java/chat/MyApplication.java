@@ -23,6 +23,7 @@ public class MyApplication extends Application
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
     viewHandler.start(primaryStage);
+    client.communicate();
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
     {
       @Override public void handle(WindowEvent event)

@@ -47,7 +47,7 @@
                         <Insets left="90.0" top="50.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="viewChatAsGuestField" mnemonicParsing="false" onAction="#onShowChat" prefHeight="60.0" prefWidth="120.0" style="-fx-background-color: #8d9997; -fx-border-color: #505c5c;" text="View Chat as Guest" textAlignment="CENTER">
+                  <Button fx:id="viewChatAsGuestField" mnemonicParsing="false" onAction="#onShowChat" prefHeight="60.0" prefWidth="120.0" style="-fx-background-color: #8d9997; -fx-border-color: #505c5c;" text="Continue as Guest" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="160.0" top="50.0" />
                      </HBox.margin>
