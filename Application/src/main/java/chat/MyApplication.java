@@ -2,6 +2,7 @@ package chat;
 import chat.model.Model;
 import chat.model.ModelManager;
 import chat.model.User;
+import chat.shared.Client;
 import chat.shared.Communicator;
 import chat.view.ViewHandler;
 import chat.viewmodel.ViewModelFactory;
@@ -20,10 +21,8 @@ public class MyApplication extends Application
   @Override public void start(Stage primaryStage) throws Exception
   {
     Registry registry = LocateRegistry.getRegistry(1099);
-    System.out.println("Before");
     Communicator communicator = (Communicator) registry.lookup("communicator");
-    System.out.println("After");
-    User client=new User("default",communicator);
+    Client client=new User("default",communicator);
     Model model = new ModelManager(client);
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);

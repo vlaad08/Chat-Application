@@ -27,6 +27,7 @@ public class LoginCommunicator extends UnicastRemoteObject implements Communicat
   public LoginCommunicator() throws FileNotFoundException, RemoteException, AlreadyBoundException
   {
     this.support=new RemotePropertyChangeSupport<>();
+    gson=new Gson();
   }
 
   @Override public void sendMessage(Message message) throws IOException

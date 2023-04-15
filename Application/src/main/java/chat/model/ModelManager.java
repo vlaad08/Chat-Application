@@ -18,7 +18,6 @@ import java.util.Date;
 
 public class ModelManager implements Model
 {
-  private User user;
   private MessageList messageList;
   private PropertyChangeSupport support;
   private Gson gson;
@@ -51,12 +50,13 @@ public class ModelManager implements Model
 
   @Override public void setUsername(String username) throws RemoteException
   {
-    user.setUsername(username);
+    if (client.getUsername()!=null)
+    client.setUsername(username);
   }
 
   @Override public String getUsername()
   {
-    return user.getUsername();
+    return client.getUsername();
   }
 
   @Override public void sendMessage(String message, String username) throws IOException

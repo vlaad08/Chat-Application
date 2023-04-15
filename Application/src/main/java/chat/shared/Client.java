@@ -18,4 +18,6 @@ public interface Client extends Closeable
   int requestNumberOfConnectedUsers() throws IOException;
 
   void sendMessage(String json) throws IOException;
+  void setUsername(String username);
+  String getUsername();
 }
