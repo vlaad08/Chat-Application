@@ -30,9 +30,6 @@ public class LoginCommunicator extends UnicastRemoteObject implements Runnable, 
   {
     this.socket = socket;
     this.support=new RemotePropertyChangeSupport<>();
-    Registry registry = LocateRegistry.getRegistry(1099);
-    registry.bind("communicator", this);
-    System.out.println("The binding has been made");
   }
 
   public void communicate() throws IOException

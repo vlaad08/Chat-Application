@@ -24,6 +24,7 @@ public class MyApplication extends Application
   @Override public void start(Stage primaryStage) throws Exception
   {
     Registry registry = LocateRegistry.getRegistry(1099);
+    System.out.println("WTF");
     String[] remoteObjects = registry.list();
     System.out.println("Remote objects in the registry:");
     for (String object : remoteObjects) {
