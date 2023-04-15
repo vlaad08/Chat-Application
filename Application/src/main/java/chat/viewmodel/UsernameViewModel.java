@@ -4,6 +4,8 @@ import chat.model.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.rmi.RemoteException;
+
 public class UsernameViewModel
 {
   private Model model;
@@ -22,7 +24,7 @@ public class UsernameViewModel
     inputUsername.bindBidirectional(property);
   }
 
-  public void setUsername(String username)
+  public void setUsername(String username) throws RemoteException
   {
     model.setUsername(username);
   }

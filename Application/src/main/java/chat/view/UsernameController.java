@@ -10,6 +10,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 
+import java.rmi.RemoteException;
+
 public class UsernameController
 {
 
@@ -33,7 +35,14 @@ public class UsernameController
     usernameField.setOnKeyPressed(event -> {
       if(event.getCode() == KeyCode.ENTER)
       {
-        onCreateUser();
+        try
+        {
+          onCreateUser();
+        }
+        catch (RemoteException e)
+        {
+          throw new RuntimeException(e);
+        }
       }
     });
 
@@ -46,7 +55,8 @@ public class UsernameController
     return this.root;
 }
 
-  @FXML public void onCreateUser(){
+  @FXML public void onCreateUser() throws RemoteException
+  {
     //create user
     if(usernameField.getText() == null || usernameField.getText().equals(""))
     {
@@ -61,7 +71,8 @@ public class UsernameController
     }
   }
 
-  @FXML public void onShowChat(){
+  @FXML public void onShowChat() throws RemoteException
+  {
     unmodel.setUsername("Guest");
     vhandler.openView("chatView");
   }

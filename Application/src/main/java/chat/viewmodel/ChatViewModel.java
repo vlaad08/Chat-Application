@@ -36,7 +36,7 @@ public class ChatViewModel implements PropertyChangeListener
     return model.getUsername();
   }
 
-  public void sendMessage(String message, String username)
+  public void sendMessage(String message, String username) throws IOException
   {
     model.sendMessage(message, username);
   }

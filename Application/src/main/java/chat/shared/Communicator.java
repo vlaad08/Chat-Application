@@ -2,6 +2,7 @@ package chat.shared;
 
 
 
+import chat.model.Message;
 import dk.via.remote.observer.RemotePropertyChangeListener;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.rmi.RemoteException;
 
 public interface Communicator extends Remote
 {
-  void communicate() throws IOException;
+  void sendMessage(Message message) throws IOException;
   void addPropertyChangeListener(RemotePropertyChangeListener<String> listener) throws RemoteException;
   void removePropertyChangeListener(RemotePropertyChangeListener<String> listener) throws RemoteException;
 }

@@ -35,7 +35,14 @@ public class ChatController
     inputTextField.setOnKeyPressed(event -> {
       if(event.getCode() == KeyCode.ENTER)
       {
-        onSend();
+        try
+        {
+          onSend();
+        }
+        catch (IOException e)
+        {
+          throw new RuntimeException(e);
+        }
       }
     });
   }
@@ -51,7 +58,7 @@ public class ChatController
   }
 
 
-  @FXML public void onSend()
+  @FXML public void onSend() throws IOException
   {
     String text = inputTextField.getText();
     if(!text.equals(""))

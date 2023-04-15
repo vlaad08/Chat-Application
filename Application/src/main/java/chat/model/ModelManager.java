@@ -1,8 +1,9 @@
 package chat.model;
 
-import chat.client.Client;
-import chat.client.ClientImplementation;
+import chat.shared.Client;
 import com.google.gson.Gson;
+import dk.via.remote.observer.RemotePropertyChangeEvent;
+import dk.via.remote.observer.RemotePropertyChangeListener;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,6 +11,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,13 +35,13 @@ public class ModelManager implements Model
     support = new PropertyChangeSupport(this);
     gson = new Gson();
 
-    client.addPropertyChangeListener(new PropertyChangeListener()
+    client.addPropertyChangeListener(new RemotePropertyChangeListener()
     {
-      @Override public void propertyChange(PropertyChangeEvent evt)
+      @Override public void propertyChange(RemotePropertyChangeEvent remotePropertyChangeEvent) throws RemoteException
       {
-        if(evt.getPropertyName().equals("messageSentClient"))
+        if(remotePropertyChangeEvent.getPropertyName().equals("messageSentClient"))
         {
-          String text = (String) evt.getNewValue();
+          String text = (String) remotePropertyChangeEvent.getNewValue();
           receivedMessageFromServer(text);
           support.firePropertyChange("reloadMessages", true, false);
         }
@@ -47,9 +49,9 @@ public class ModelManager implements Model
     });
   }
 
-  @Override public void setUsername(String username)
+  @Override public void setUsername(String username) throws RemoteException
   {
-    user = new User(username);
+    user.setUsername(username);
   }
 
   @Override public String getUsername()
@@ -57,7 +59,7 @@ public class ModelManager implements Model
     return user.getUsername();
   }
 
-  @Override public void sendMessage(String message, String username)
+  @Override public void sendMessage(String message, String username) throws IOException
   {
     message = username + ":\n" + message;
     String json = gson.toJson(Message.getInstance(message));

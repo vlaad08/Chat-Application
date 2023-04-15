@@ -18,67 +18,62 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class LoginCommunicator extends UnicastRemoteObject implements Runnable, Communicator
+public class LoginCommunicator extends UnicastRemoteObject implements Communicator
 {
-  private final Socket socket;
   private Gson gson;
   private RemotePropertyChangeSupport<String> support;
   private  int connectedClients = 0;
 
-  public LoginCommunicator(Socket socket)
-      throws FileNotFoundException, RemoteException, AlreadyBoundException
+  public LoginCommunicator() throws FileNotFoundException, RemoteException, AlreadyBoundException
   {
-    this.socket = socket;
     this.support=new RemotePropertyChangeSupport<>();
   }
 
-  public void communicate() throws IOException
+  @Override public void sendMessage(Message message) throws IOException
   {
-    InputStream inputStream = socket.getInputStream();
-    OutputStream outputStream = socket.getOutputStream();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-    PrintWriter writer = new PrintWriter(outputStream);
-    try{
-      loop : while (true)
-      {
-        String text = reader.readLine();
-        if(text == null)
-        {
-          break loop;
-
-        }
-        else if(text.equals("connect"))
-        {
-          connectedClients++;
-          writer.println("connected");
-          writer.flush();
-        }
-        else if(text.equals("returnNumberOfConnectedClients"))
-        {
-          writer.println(connectedClients);
-          writer.flush();
-        }
-        else
-        {
-          support.firePropertyChange("message",null, text);
-        }
-      }
-    }
-
-    finally
-    {
-      socket.close();
-    }
+    String m= gson.toJson(message);
+    support.firePropertyChange("messageSentClient",null,m);
   }
 
-  @Override public void run()
-  {
-    try{
-        communicate();
-    }catch (IOException e){
-      e.printStackTrace();
-    }
-  }
+//  public void communicate() throws IOException
+//  {
+//    InputStream inputStream = socket.getInputStream();
+//    OutputStream outputStream = socket.getOutputStream();
+//    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//    PrintWriter writer = new PrintWriter(outputStream);
+//    try{
+//      loop : while (true)
+//      {
+//        String text = reader.readLine();
+//        if(text == null)
+//        {
+//          break loop;
+//
+//        }
+//        else if(text.equals("connect"))
+//        {
+//          connectedClients++;
+//          writer.println("connected");
+//          writer.flush();
+//        }
+//        else if(text.equals("returnNumberOfConnectedClients"))
+//        {
+//          writer.println(connectedClients);
+//          writer.flush();
+//        }
+//        else
+//        {
+//          support.firePropertyChange("message",null, text);
+//        }
+//      }
+//    }
+//
+//    finally
+//    {
+//      socket.close();
+//    }
+//  }
+
 
   @Override public void addPropertyChangeListener(RemotePropertyChangeListener<String> listener) throws RemoteException
   {

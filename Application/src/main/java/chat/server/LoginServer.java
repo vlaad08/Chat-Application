@@ -17,17 +17,10 @@ public class LoginServer
 
   public static void main(String[] args) throws IOException, AlreadyBoundException
   {
-    ServerSocket serverSocket = new ServerSocket(4567);
-    Registry registry = LocateRegistry.getRegistry(1099);
-    while (true)
-    {
-      System.out.println("Server is ready for input on port 4567");
-      Socket socket = serverSocket.accept();
-      Communicator communicator = new LoginCommunicator(socket);
-      registry.rebind("communicator",communicator);
-      Thread communicatorThread = new Thread((Runnable) communicator);
-      communicatorThread.start();
-    }
+    Registry registry = LocateRegistry.createRegistry(1099);
+    Communicator communicator=new LoginCommunicator();
+    registry.bind("communicator",communicator);
+    System.out.println("Server is running");
 
   }
 }
