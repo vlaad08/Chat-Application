@@ -40,7 +40,7 @@ public class ClientImplementation extends UnicastRemoteObject implements Client,
     support=new PropertyChangeSupport(this);
     gson = new Gson();
     this.communicator=communicator;
-    communicator.addPropertyChangeListener(this);
+    this.communicator.addPropertyChangeListener(this);
   }
 
 
@@ -81,14 +81,6 @@ public class ClientImplementation extends UnicastRemoteObject implements Client,
   {
     writer.println(json);
     writer.flush();
-  }
-
-  public void receiveBroadcast(String message) throws IOException
-  {
-    Platform.runLater(() -> {
-      Message msg = gson.fromJson(message, Message.class);
-      support.firePropertyChange("messageSentClient", false,msg.getMessage());
-    });
   }
 
   @Override public void close() throws IOException

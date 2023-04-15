@@ -12,4 +12,5 @@ module chat {
   opens chat.client to com.google.gson;
 
   exports chat;
+  exports chat.shared to java.rmi;
 }

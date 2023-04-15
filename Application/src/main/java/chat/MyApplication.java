@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -21,8 +24,9 @@ public class MyApplication extends Application
   @Override public void start(Stage primaryStage) throws Exception
   {
     Registry registry = LocateRegistry.getRegistry(1099);
-    Communicator communicator=(Communicator) registry.lookup("login");
-    ClientImplementation client = new ClientImplementation("localhost", 8080,communicator);
+    Communicator communicator = (Communicator) registry.lookup("login");
+    ClientImplementation client=new ClientImplementation("localhost", 8080,communicator);
+
     Model model = new ModelManager(client);
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
