@@ -21,6 +21,13 @@
             <version>18.0.1</version>
         </dependency>
         <dependency>
+            <groupId>remoteobserver</groupId>
+            <artifactId>remoteobserver</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${project.basedir}/libs/remoteobserver.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>18.0.1</version>

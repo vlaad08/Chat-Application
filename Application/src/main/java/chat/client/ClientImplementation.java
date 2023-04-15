@@ -3,6 +3,8 @@ package chat.client;
 import chat.MyApplication;
 import chat.model.Message;
 import com.google.gson.Gson;
+import dk.via.remote.observer.RemotePropertyChangeEvent;
+import dk.via.remote.observer.RemotePropertyChangeListener;
 import javafx.application.Application;
 import javafx.application.Platform;
 
@@ -11,21 +13,22 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class ClientImplementation implements Client
+public class ClientImplementation extends UnicastRemoteObject implements Client,
+    RemotePropertyChangeListener<String>
 {
   private final Socket socket;
   private final PrintWriter writer;
   private final PropertyChangeSupport support;
   private final BufferedReader reader;
-  private final MessageListener listener;
   private final Gson gson;
 
 
   public ClientImplementation(String host, int port, String groupAddress, int groupPort) throws IOException
   {
-
     socket = new Socket(host, port);
     InputStream inputStream = socket.getInputStream();
     OutputStream outputStream = socket.getOutputStream();
@@ -35,9 +38,7 @@ public class ClientImplementation implements Client
     support=new PropertyChangeSupport(this);
 
     gson = new Gson();
-    listener=new MessageListener(this,groupAddress,groupPort);
-    Thread thread=new Thread(listener);
-    thread.start();
+
   }
 
 
@@ -90,7 +91,14 @@ public class ClientImplementation implements Client
 
   @Override public void close() throws IOException
   {
-    listener.close();
     socket.close();
+  }
+
+  @Override public void propertyChange(RemotePropertyChangeEvent<String> remotePropertyChangeEvent) throws RemoteException
+  {
+    Platform.runLater(() -> {
+      Message msg = gson.fromJson(message, Message.class);
+      support.firePropertyChange("messageSentClient", false,msg.getMessage());
+    });
   }
 }

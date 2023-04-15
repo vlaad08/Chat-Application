@@ -3,6 +3,8 @@ module chat {
   requires javafx.fxml;
   requires java.desktop;
   requires com.google.gson;
+  requires java.rmi;
+  requires remoteobserver;
 
   opens chat to javafx.fxml;
   opens chat.view to javafx.fxml;
