@@ -1,6 +1,7 @@
 package chat.model;
 
 import chat.shared.Client;
+import chat.shared.Communicator;
 import com.google.gson.Gson;
 import dk.via.remote.observer.RemotePropertyChangeEvent;
 import dk.via.remote.observer.RemotePropertyChangeListener;
