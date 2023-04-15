@@ -24,8 +24,13 @@ public class MyApplication extends Application
   @Override public void start(Stage primaryStage) throws Exception
   {
     Registry registry = LocateRegistry.getRegistry(1099);
-    Communicator communicator = (Communicator) registry.lookup("login");
-    ClientImplementation client=new ClientImplementation("localhost", 8080,communicator);
+    String[] remoteObjects = registry.list();
+    System.out.println("Remote objects in the registry:");
+    for (String object : remoteObjects) {
+      System.out.println(object);
+    }
+    LoginCommunicator communicator = (LoginCommunicator) registry.lookup("communicator");
+    ClientImplementation client=new ClientImplementation("localhost", 4567,communicator);
 
     Model model = new ModelManager(client);
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);

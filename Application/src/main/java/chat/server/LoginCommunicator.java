@@ -8,8 +8,11 @@ import dk.via.remote.observer.RemotePropertyChangeSupport;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -22,15 +25,18 @@ public class LoginCommunicator extends UnicastRemoteObject implements Runnable, 
   private RemotePropertyChangeSupport<String> support;
   private  int connectedClients = 0;
 
-  public LoginCommunicator(Socket socket) throws FileNotFoundException, RemoteException
+  public LoginCommunicator(Socket socket)
+      throws FileNotFoundException, RemoteException, AlreadyBoundException
   {
     this.socket = socket;
     this.support=new RemotePropertyChangeSupport<>();
+    Registry registry = LocateRegistry.getRegistry(1099);
+    registry.bind("communicator", this);
+    System.out.println("The binding has been made");
   }
 
   public void communicate() throws IOException
   {
-
     InputStream inputStream = socket.getInputStream();
     OutputStream outputStream = socket.getOutputStream();
     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

@@ -18,8 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class ClientImplementation extends UnicastRemoteObject implements Client,
-    RemotePropertyChangeListener<String>
+public class ClientImplementation extends UnicastRemoteObject implements Client, RemotePropertyChangeListener<String>
 {
   private final Socket socket;
   private final PrintWriter writer;
@@ -44,8 +43,7 @@ public class ClientImplementation extends UnicastRemoteObject implements Client,
   }
 
 
-  @Override public synchronized void communicate()
-      throws IOException, InterruptedException
+  @Override public synchronized void communicate() throws IOException
   {
     writer.println("connect");
     System.out.println("connect");
@@ -57,14 +55,12 @@ public class ClientImplementation extends UnicastRemoteObject implements Client,
 
   }
 
-  @Override public void addPropertyChangeListener(
-      PropertyChangeListener listener)
+  @Override public void addPropertyChangeListener(PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(listener);
   }
 
-  @Override public void removePropertyChangeListener(
-      PropertyChangeListener listener)
+  @Override public void removePropertyChangeListener(PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(listener);
   }
