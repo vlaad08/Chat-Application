@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class ModelManager implements Model
 
   private final PrintWriter fileWriter = new PrintWriter(fileOut);
 
+  private int connectedUsers = 0;
 
   public ModelManager(Communicator client) throws IOException
   {
@@ -69,7 +71,7 @@ public class ModelManager implements Model
 
   @Override public int getConnectedUsers()
   {
-    return 0;
+    return connectedUsers;
   }
 
   @Override public void closeLogFile()
@@ -89,5 +91,19 @@ public class ModelManager implements Model
     support.removePropertyChangeListener(listener);
   }
 
+  @Override public void userLoggedIn() throws RemoteException
+  {
+    client.userLoggedIn();
+  }
+
+  @Override public void userLoggedOut() throws RemoteException
+  {
+    client.userLoggedOut();
+  }
+
+  @Override public void setUsers(int x)
+  {
+    connectedUsers = x;
+  }
 
 }

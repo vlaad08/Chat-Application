@@ -1,5 +1,6 @@
 package chat.server;
 
+import chat.model.Listener;
 import chat.shared.Communicator;
 import chat.shared.Message;
 import com.google.gson.Gson;
@@ -16,10 +17,15 @@ public class LoginCommunicator implements Communicator
 {
 
   private final RemotePropertyChangeSupport<Message> support;
+  private final RemotePropertyChangeSupport<Integer> usersSupport;
+
+  private int users;
 
   public LoginCommunicator()
   {
     this.support = new RemotePropertyChangeSupport<>();
+    usersSupport = new RemotePropertyChangeSupport<>();
+    users = 0;
   }
 
   @Override public void communicate(Message message) throws IOException
@@ -37,6 +43,36 @@ public class LoginCommunicator implements Communicator
       RemotePropertyChangeListener<Message> listener) throws RemoteException
   {
       support.removePropertyChangeListener(listener);
+  }
+
+  @Override public void addUsersListener(
+      RemotePropertyChangeListener<Integer> listener) throws RemoteException
+  {
+    usersSupport.addPropertyChangeListener(listener);
+  }
+
+  @Override public void removeUsersListener(
+      RemotePropertyChangeListener<Integer> listener) throws RemoteException
+  {
+    usersSupport.addPropertyChangeListener(listener);
+  }
+
+  @Override public void userLoggedIn() throws RemoteException
+  {
+    users++;
+    updateUsers();
+  }
+
+  @Override public void userLoggedOut() throws RemoteException
+  {
+    users--;
+    updateUsers();
+  }
+
+  @Override public void updateUsers() throws RemoteException
+  {
+    usersSupport.firePropertyChange("users", null, users);
+
   }
 
 }

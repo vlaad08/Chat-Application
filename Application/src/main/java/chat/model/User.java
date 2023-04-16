@@ -1,8 +1,11 @@
 package chat.model;
 
+
+
 public class User
 {
   private final String username;
+
 
   public User (String username)
   {
@@ -13,4 +16,6 @@ public class User
   {
     return username;
   }
+
+
 }

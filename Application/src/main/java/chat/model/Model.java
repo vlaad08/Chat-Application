@@ -4,6 +4,7 @@ import chat.viewmodel.ChatViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface Model
@@ -24,4 +25,9 @@ public interface Model
   void addPropertyChangeListener(PropertyChangeListener listener);
 
   void removePropertyChaneListener(PropertyChangeListener listener);
+
+  void userLoggedIn() throws RemoteException;
+  void userLoggedOut() throws RemoteException;
+
+  void setUsers(int x);
 }
