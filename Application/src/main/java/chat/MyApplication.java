@@ -1,5 +1,5 @@
 package chat;
-import chat.client.ClientImplementation;
+
 import chat.model.Model;
 import chat.model.ModelManager;
 import chat.server.LoginCommunicator;
@@ -10,11 +10,6 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -24,32 +19,17 @@ public class MyApplication extends Application
   @Override public void start(Stage primaryStage) throws Exception
   {
     Registry registry = LocateRegistry.getRegistry(1099);
-    System.out.println("WTF");
-    String[] remoteObjects = registry.list();
-    System.out.println("Remote objects in the registry:");
-    for (String object : remoteObjects) {
-      System.out.println(object);
-    }
-    LoginCommunicator communicator = (LoginCommunicator) registry.lookup("communicator");
-    ClientImplementation client=new ClientImplementation("localhost", 4567,communicator);
+    Communicator communicator = (Communicator) registry.lookup("communicator");
 
-    Model model = new ModelManager(client);
+
+    Model model = new ModelManager(communicator);
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
     viewHandler.start(primaryStage);
-    client.communicate();
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
     {
       @Override public void handle(WindowEvent event)
       {
-        try
-        {
-          client.close();
-        }
-        catch (IOException e)
-        {
-          throw new RuntimeException(e);
-        }
         model.closeLogFile();
         viewHandler.closeView();
       }

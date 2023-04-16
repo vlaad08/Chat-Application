@@ -1,5 +1,7 @@
 package chat.model;
 
+import chat.viewmodel.ChatViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,16 +11,17 @@ public interface Model
   void setUsername(String username);
   String getUsername();
 
-  void sendMessage(String message, String username);
+  void sendMessage(String message, String username) throws IOException;
 
   ArrayList<String> getMessages();
 
-  void addPropertyChangeListener(PropertyChangeListener listener);
-  void removePropertyChangeListener(PropertyChangeListener listener);
 
   void receivedMessageFromServer(String message);
 
   int getConnectedUsers() throws IOException;
 
   void closeLogFile();
+  void addPropertyChangeListener(PropertyChangeListener listener);
+
+  void removePropertyChaneListener(PropertyChangeListener listener);
 }

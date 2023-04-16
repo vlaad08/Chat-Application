@@ -3,6 +3,7 @@ package chat.server;
 import chat.model.Message;
 import chat.shared.Communicator;
 import com.google.gson.Gson;
+import dk.via.remote.observer.RemotePropertyChangeEvent;
 import dk.via.remote.observer.RemotePropertyChangeListener;
 import dk.via.remote.observer.RemotePropertyChangeSupport;
 
@@ -18,67 +19,27 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class LoginCommunicator extends UnicastRemoteObject implements Runnable, Communicator
+public class LoginCommunicator implements Communicator
 {
-  private final Socket socket;
+  private Socket socket;
   private Gson gson;
-  private RemotePropertyChangeSupport<String> support;
-  private  int connectedClients = 0;
+  private final RemotePropertyChangeSupport<String> support;
+  //private  int connectedClients = 0;
 
-  public LoginCommunicator(Socket socket)
-      throws FileNotFoundException, RemoteException, AlreadyBoundException
+  public LoginCommunicator()
+      throws RemoteException, AlreadyBoundException
   {
-    this.socket = socket;
+    //this.socket = socket;
     this.support=new RemotePropertyChangeSupport<>();
+    support.addPropertyChangeListener(this);
   }
 
-  public void communicate() throws IOException
+  public void communicate(String message) throws IOException
   {
-    InputStream inputStream = socket.getInputStream();
-    OutputStream outputStream = socket.getOutputStream();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-    PrintWriter writer = new PrintWriter(outputStream);
-    try{
-      loop : while (true)
-      {
-        String text = reader.readLine();
-        if(text == null)
-        {
-          break loop;
-
-        }
-        else if(text.equals("connect"))
-        {
-          connectedClients++;
-          writer.println("connected");
-          writer.flush();
-        }
-        else if(text.equals("returnNumberOfConnectedClients"))
-        {
-          writer.println(connectedClients);
-          writer.flush();
-        }
-        else
-        {
-          support.firePropertyChange("message",null, text);
-        }
-      }
-    }
-
-    finally
-    {
-      socket.close();
-    }
+    System.out.println(message);
+    support.firePropertyChange("MessageSentServer", "", message);
   }
 
-  @Override public void run()
-  {
-    try{
-        communicate();
-    }catch (IOException e){
-      e.printStackTrace();
-    }
-  }
 
   @Override public void addPropertyChangeListener(RemotePropertyChangeListener<String> listener) throws RemoteException
   {
@@ -88,5 +49,24 @@ public class LoginCommunicator extends UnicastRemoteObject implements Runnable, 
   @Override public void removePropertyChangeListener(RemotePropertyChangeListener<String> listener) throws RemoteException
   {
     support.removePropertyChangeListener(listener);
+  }
+
+  @Override public void propertyChange(
+      RemotePropertyChangeEvent remotePropertyChangeEvent)
+      throws RemoteException
+  {
+    if(remotePropertyChangeEvent.getPropertyName().equals("MessageSentClient"))
+    {
+      String message = (String) remotePropertyChangeEvent.getNewValue();
+
+      try
+      {
+        communicate(message);
+      }
+      catch (IOException e)
+      {
+        throw new RuntimeException(e);
+      }
+    }
   }
 }
