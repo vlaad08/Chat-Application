@@ -1,9 +1,10 @@
-package chat.model;
+package chat.shared;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Message
+public class Message implements Serializable
 {
   private static final HashMap<Integer, Message> instances = new HashMap<>();
   private String text;

@@ -1,39 +1,31 @@
 package chat.model;
 
 import chat.shared.Communicator;
-import com.google.gson.Gson;
-import dk.via.remote.observer.RemotePropertyChangeEvent;
-import dk.via.remote.observer.RemotePropertyChangeListener;
-import dk.via.remote.observer.RemotePropertyChangeSupport;
-
-import java.beans.PropertyChangeEvent;
+import chat.shared.Message;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ModelManager implements Model, RemotePropertyChangeListener<String>
+public class ModelManager implements Model
 {
   private User user;
   private final MessageList messageList;
-  private final RemotePropertyChangeSupport<String> remoteSupport;
   private final PropertyChangeSupport support;
-  private Communicator client;
-  private FileOutputStream fileOut = new FileOutputStream("chatLog.txt");
+  private final Communicator client;
+  private final FileOutputStream fileOut = new FileOutputStream("chatLog.txt");
 
-  private PrintWriter fileWriter = new PrintWriter(fileOut);
+  private final PrintWriter fileWriter = new PrintWriter(fileOut);
 
 
   public ModelManager(Communicator client) throws IOException
   {
     this.client = client;
     messageList = new MessageList();
-    remoteSupport = new RemotePropertyChangeSupport<>();
     support = new PropertyChangeSupport(this);
   }
 
@@ -51,7 +43,8 @@ public class ModelManager implements Model, RemotePropertyChangeListener<String>
       throws IOException
   {
     message = username + ":\n" + message;
-    remoteSupport.firePropertyChange("MessageSentClient", "", message);
+    Message msg = Message.getInstance(message);
+    client.communicate(msg);
   }
 
 
@@ -61,14 +54,6 @@ public class ModelManager implements Model, RemotePropertyChangeListener<String>
     return messageList.getMessages();
   }
 
-  public void addRemotePropertyChangeListener(RemotePropertyChangeListener<String> listener)
-  {
-    remoteSupport.addPropertyChangeListener(listener);
-  }
-  public void removeRemotePropertyChangeListener(RemotePropertyChangeListener<String> listener)
-  {
-    remoteSupport.removePropertyChangeListener(listener);
-  }
 
   @Override public void receivedMessageFromServer(String message)
   {
@@ -82,7 +67,7 @@ public class ModelManager implements Model, RemotePropertyChangeListener<String>
     fileWriter.write(log);
   }
 
-  @Override public int getConnectedUsers() throws IOException
+  @Override public int getConnectedUsers()
   {
     return 0;
   }
@@ -104,14 +89,5 @@ public class ModelManager implements Model, RemotePropertyChangeListener<String>
     support.removePropertyChangeListener(listener);
   }
 
-  @Override public void propertyChange(
-      RemotePropertyChangeEvent<String> remotePropertyChangeEvent)
-      throws RemoteException
-  {
-      if(remotePropertyChangeEvent.getPropertyName().equals("MessageSentServer"))
-      {
-        String message = remotePropertyChangeEvent.getNewValue();
-        receivedMessageFromServer(message);
-      }
-  }
+
 }

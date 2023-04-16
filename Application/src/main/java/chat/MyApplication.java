@@ -1,5 +1,6 @@
 package chat;
 
+import chat.model.Listener;
 import chat.model.Model;
 import chat.model.ModelManager;
 import chat.server.LoginCommunicator;
@@ -20,9 +21,8 @@ public class MyApplication extends Application
   {
     Registry registry = LocateRegistry.getRegistry(1099);
     Communicator communicator = (Communicator) registry.lookup("communicator");
-
-
     Model model = new ModelManager(communicator);
+    communicator.addPropertyChangeListener(new Listener(model));
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
     viewHandler.start(primaryStage);

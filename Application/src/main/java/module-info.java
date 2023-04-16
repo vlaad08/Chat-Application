@@ -9,7 +9,7 @@ module chat {
   opens chat to javafx.fxml;
   opens chat.view to javafx.fxml;
   opens chat.model to com.google.gson;
-  opens chat.shared to java.rmi;
 
   exports chat;
+  opens chat.shared to com.google.gson, java.rmi;
 }
